@@ -1,0 +1,23 @@
+{
+  "name": "ats-resume-generator",
+  "version": "1.0.0",
+  "description": "ATS-friendly resume and CV generator built with Node.js and Express.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/app.test.js"
+  },
+  "keywords": [
+    "ats",
+    "resume",
+    "cv",
+    "nodejs",
+    "express"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "adm-zip": "^0.5.17",
+    "express": "^5.2.1",
+    "multer": "^2.1.1"
+  }
+}
