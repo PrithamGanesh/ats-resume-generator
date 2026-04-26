@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATS Resume Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-bg"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>ATS<em>Resume</em></span>
+      </div>
+      <div class="header-badge">Powered by Claude AI · Self-Hosted · Unlimited Usage</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        ATS-Optimized · Keyword-Matched · Tailored
+      </div>
+      <h1>Land More <em>Interviews</em><br>With Tailored Resumes</h1>
+      <p class="hero-sub">Paste any job description. Upload your resume. Get a precisely tailored, ATS-friendly document in seconds — powered by your own Claude API key with zero subscription.</p>
+    </section>
+
+    <div class="app-grid">
+      <!-- LEFT: Input Panel -->
+      <div class="panel input-panel">
+        <div class="panel-section">
+          <h2 class="panel-title">Job Details</h2>
+          <div class="field-row">
+            <div class="field">
+              <label for="jobRole">Target Role <span class="req">*</span></label>
+              <input type="text" id="jobRole" placeholder="e.g. Senior Product Manager" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label for="candidateName">Your Full Name</label>
+              <input type="text" id="candidateName" placeholder="e.g. Priya Sharma" autocomplete="off" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="jobDesc">Job Description <span class="req">*</span></label>
+            <textarea id="jobDesc" rows="7" placeholder="Paste the complete job description here. The more detail you include, the better the keyword matching will be..."></textarea>
+            <span class="field-hint" id="jdCount">0 characters</span>
+          </div>
+          <div class="field">
+            <label for="jobResp">Key Responsibilities <span class="opt">(optional)</span></label>
+            <textarea id="jobResp" rows="3" placeholder="List specific responsibilities from the posting if not already in the JD above..."></textarea>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="panel-section">
+          <h2 class="panel-title">Your Resume</h2>
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt" />
+            <div class="upload-content" id="uploadContent">
+              <div class="upload-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <p>Drop your resume here or <span class="link-text">browse</span></p>
+              <small>PDF · DOC · DOCX · TXT — max 5 MB</small>
+            </div>
+            <div class="upload-success" id="uploadSuccess" style="display:none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span id="uploadFileName">file.pdf</span>
+              <button class="remove-file" onclick="removeFile()" title="Remove file">✕</button>
+            </div>
+          </div>
+
+          <div class="or-divider"><span>or paste below</span></div>
+
+          <div class="field">
+            <label for="existingResume">Paste Your Resume Text <span class="req">*</span></label>
+            <textarea id="existingResume" rows="8" placeholder="Paste your current resume content here — work history, skills, education, achievements, certifications...&#10;&#10;The AI will extract your experience and tailor it to the job."></textarea>
+            <span class="field-hint" id="resumeCount">0 characters</span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="panel-section">
+          <h2 class="panel-title">Output Options</h2>
+          <div class="options-row">
+            <div class="option-group">
+              <label class="option-label">Document Type</label>
+              <div class="toggle-group" id="docTypeToggle">
+                <button class="toggle-btn active" data-value="resume" onclick="setToggle('docType', 'resume', this)">Resume</button>
+                <button class="toggle-btn" data-value="cv" onclick="setToggle('docType', 'cv', this)">Full CV</button>
+              </div>
+            </div>
+            <div class="option-group">
+              <label class="option-label">Output Format</label>
+              <div class="toggle-group" id="formatToggle">
+                <button class="toggle-btn active" data-value="pdf" onclick="setToggle('format', 'pdf', this)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                  PDF
+                </button>
+                <button class="toggle-btn" data-value="docx" onclick="setToggle('format', 'docx', this)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2-4 2 4"/></svg>
+                  DOCX
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="error-box" id="errorBox" style="display:none;"></div>
+
+        <button class="generate-btn" id="generateBtn" onclick="generate()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Generate ATS-Optimized Document
+        </button>
+
+        <div class="progress-wrap" id="progressWrap" style="display:none;">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="progress-label">
+            <span class="spinner"></span>
+            <span id="progressText">Analyzing job description...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Output Panel -->
+      <div class="panel output-panel" id="outputPanel">
+        <div class="output-placeholder" id="outputPlaceholder">
+          <div class="placeholder-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>Your tailored resume will appear here</h3>
+          <p>Fill in the job details and your resume on the left, then click generate.</p>
+          <div class="tips">
+            <div class="tip"><strong>ATS Tip #1</strong>Mirror exact keywords from the job description — not synonyms.</div>
+            <div class="tip"><strong>ATS Tip #2</strong>Every achievement should have a number: %, $, headcount, or time saved.</div>
+            <div class="tip"><strong>ATS Tip #3</strong>Avoid tables, columns, and graphics — ATS bots can't parse them.</div>
+          </div>
+        </div>
+
+        <div class="result-view" id="resultView" style="display:none;">
+          <div class="result-header">
+            <div class="result-meta">
+              <div class="ats-score" id="atsScoreBadge">ATS Score: —</div>
+              <div class="result-title-text" id="resultTitleText">ATS-Optimized Resume</div>
+            </div>
+            <div class="result-actions">
+              <button class="action-btn" onclick="copyText()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+              </button>
+              <button class="action-btn primary" id="downloadBtn" onclick="downloadFile()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download
+              </button>
+            </div>
+          </div>
+
+          <div class="keywords-strip" id="keywordsStrip"></div>
+
+          <div class="improvements-strip" id="improvementsStrip"></div>
+
+          <div class="resume-preview" id="resumePreview"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Self-hosted · Your API key stays local · No data stored · <a href="https://console.anthropic.com" target="_blank">Get your Claude API key →</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,3 +1,9 @@
 node_modules/
 .npm-cache/
-__pycache__/
+.env
+uploads/
+*.pdf
+*.docx
+dist/
+.DS_Store
+Thumbs.db

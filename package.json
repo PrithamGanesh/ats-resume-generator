@@ -1,23 +1,21 @@
 {
   "name": "ats-resume-generator",
   "version": "1.0.0",
-  "description": "ATS-friendly resume and CV generator built with Node.js and Express.",
-  "main": "server.js",
+  "description": "Self-hosted ATS-optimized Resume & CV Generator powered by Claude AI",
+  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "test": "node tests/app.test.js"
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
   },
-  "keywords": [
-    "ats",
-    "resume",
-    "cv",
-    "nodejs",
-    "express"
-  ],
-  "license": "MIT",
   "dependencies": {
-    "adm-zip": "^0.5.17",
-    "express": "^5.2.1",
-    "multer": "^2.1.1"
+    "@anthropic-ai/sdk": "^0.39.0",
+    "docx": "^9.5.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jszip": "^3.10.1",
+    "multer": "^1.4.5-lts.1",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.9.155"
   }
 }

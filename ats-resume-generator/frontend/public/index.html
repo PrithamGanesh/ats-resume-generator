@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ATS Resume Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      ATS<em>Resume</em>
+    </div>
+    <div class="header-pill">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+      Rule-Based Engine · No AI · 100% Free · Unlimited
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="hero-chip">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+      Keyword Matching · Bullet Optimisation · ATS Scoring · PDF & DOCX Export
+    </div>
+    <h1>ATS Resume Generator<br><em>Rule-Based. Instant. Free.</em></h1>
+    <p>No AI models. No subscriptions. No internet required after setup.<br>
+       Pure algorithmic keyword matching, gap analysis, and document generation.</p>
+  </section>
+
+  <!-- ── HOW IT WORKS ──────────────────────────── -->
+  <div class="how-it-works">
+    <div class="how-step">
+      <div class="how-num">1</div>
+      <div><strong>Keyword Extraction</strong><br>Parses 500+ industry skills from the job description</div>
+    </div>
+    <div class="how-arrow">→</div>
+    <div class="how-step">
+      <div class="how-num">2</div>
+      <div><strong>Resume Parsing</strong><br>Extracts sections, experience, skills, education</div>
+    </div>
+    <div class="how-arrow">→</div>
+    <div class="how-step">
+      <div class="how-num">3</div>
+      <div><strong>Gap Analysis</strong><br>Matches, scores, and identifies missing keywords</div>
+    </div>
+    <div class="how-arrow">→</div>
+    <div class="how-step">
+      <div class="how-num">4</div>
+      <div><strong>Document Build</strong><br>Generates ATS-safe PDF or DOCX instantly</div>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- ── INPUT PANEL ──────────────────────────── -->
+    <div class="card">
+
+      <div class="card-sec">
+        <div class="sec-label">Job Details</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="jobRole">Target Role <span class="req">*</span></label>
+            <input type="text" id="jobRole" placeholder="e.g. Senior Data Engineer"/>
+          </div>
+          <div class="field">
+            <label for="candidateName">Your Name</label>
+            <input type="text" id="candidateName" placeholder="e.g. Priya Sharma"/>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="jobDesc">Job Description <span class="req">*</span></label>
+          <textarea id="jobDesc" rows="7"
+            placeholder="Paste the full job description here.&#10;The engine will extract all required skills, keywords, and requirements from this text..."></textarea>
+          <span class="char-hint" id="jdHint">0 characters</span>
+        </div>
+
+        <div class="field">
+          <label for="jobResp">Key Responsibilities <span class="opt">optional</span></label>
+          <textarea id="jobResp" rows="3"
+            placeholder="Any additional responsibilities not listed in the JD above..."></textarea>
+        </div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <div class="card-sec">
+        <div class="sec-label">Your Existing Resume</div>
+
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt"/>
+          <div id="uploadIdle">
+            <div class="upload-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <p>Drop your resume or <span class="link">browse</span></p>
+            <small>PDF · DOCX · TXT · max 5 MB</small>
+          </div>
+          <div id="uploadDone" class="upload-done" style="display:none;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span id="uploadName">file.pdf</span>
+            <button class="btn-remove" onclick="removeFile()">✕</button>
+          </div>
+        </div>
+
+        <div class="or-sep"><span>or paste text directly</span></div>
+
+        <div class="field">
+          <label for="existingResume">Resume Text <span class="req">*</span></label>
+          <textarea id="existingResume" rows="10"
+            placeholder="Paste your full resume here — work experience, skills, education, certifications...&#10;&#10;The engine will parse sections automatically and restructure them for ATS compatibility."></textarea>
+          <span class="char-hint" id="rcHint">0 characters</span>
+        </div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <div class="card-sec">
+        <div class="sec-label">Output Options</div>
+        <div class="options-row">
+          <div class="opt-group">
+            <div class="opt-label">Document Type</div>
+            <div class="toggle" id="docTypeToggle">
+              <button class="tbtn active" onclick="setToggle('docType','resume',this)">Resume</button>
+              <button class="tbtn"        onclick="setToggle('docType','cv',this)">Full CV</button>
+            </div>
+          </div>
+          <div class="opt-group">
+            <div class="opt-label">Output Format</div>
+            <div class="toggle" id="fmtToggle">
+              <button class="tbtn active" onclick="setToggle('format','pdf',this)">PDF</button>
+              <button class="tbtn"        onclick="setToggle('format','docx',this)">DOCX</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="error-bar" id="errorBar" style="display:none;"></div>
+
+      <div class="card-sec" style="padding-top:0;">
+        <button class="btn-gen" id="genBtn" onclick="generate()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          Analyse &amp; Generate ATS Document
+        </button>
+
+        <div class="progress-area" id="progressArea" style="display:none;">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="progress-label">
+            <span class="spinner"></span>
+            <span id="progressText">Extracting keywords...</span>
+          </div>
+        </div>
+      </div>
+    </div><!-- /input card -->
+
+    <!-- ── OUTPUT PANEL ─────────────────────────── -->
+    <div class="card output-card">
+
+      <div id="outputEmpty" class="output-empty">
+        <div class="empty-icon">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h3>Your optimised resume will appear here</h3>
+        <p>Fill in the job details and paste your resume, then click Generate.</p>
+        <div class="engine-info">
+          <div class="ei-title">What the engine does</div>
+          <div class="ei-item">
+            <span class="ei-dot"></span>
+            Scans 500+ skill keywords across tech, business, and soft skills
+          </div>
+          <div class="ei-item">
+            <span class="ei-dot"></span>
+            Parses resume sections automatically (Experience, Education, Skills…)
+          </div>
+          <div class="ei-item">
+            <span class="ei-dot"></span>
+            Computes ATS score from keyword coverage, verb strength, and format
+          </div>
+          <div class="ei-item">
+            <span class="ei-dot"></span>
+            Replaces weak verbs (helped, assisted) with strong action verbs
+          </div>
+          <div class="ei-item">
+            <span class="ei-dot"></span>
+            Builds ATS-safe single-column PDF or DOCX — no tables, no graphics
+          </div>
+          <div class="ei-item">
+            <span class="ei-dot"></span>
+            Generates gap report: matched vs missing keywords
+          </div>
+        </div>
+      </div>
+
+      <div id="outputResult" style="display:none;">
+
+        <!-- Score bar -->
+        <div class="score-bar">
+          <div class="score-left">
+            <div class="score-ring" id="scoreRing">
+              <svg viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="15.9" fill="none" stroke="#2a2a3a" stroke-width="3"/>
+                <circle cx="18" cy="18" r="15.9" fill="none" stroke="#c49a1a" stroke-width="3"
+                  stroke-dasharray="100" stroke-dashoffset="100"
+                  id="scoreArc" stroke-linecap="round"
+                  transform="rotate(-90 18 18)"/>
+              </svg>
+              <span id="scoreNum">0</span>
+            </div>
+            <div>
+              <div class="score-label">ATS Score</div>
+              <div class="score-sub" id="scoreSub">Calculating...</div>
+            </div>
+          </div>
+          <div class="score-actions">
+            <button class="btn-act" onclick="copyText()">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              Copy
+            </button>
+            <button class="btn-act primary" onclick="downloadFile()">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download
+            </button>
+          </div>
+        </div>
+
+        <!-- Keyword panels -->
+        <div class="kw-panels">
+          <div class="kw-panel matched">
+            <div class="kw-panel-title">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Matched Keywords
+            </div>
+            <div class="kw-tags" id="kwMatched"></div>
+          </div>
+          <div class="kw-panel missing">
+            <div class="kw-panel-title">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Missing Keywords
+            </div>
+            <div class="kw-tags" id="kwMissing"></div>
+          </div>
+        </div>
+
+        <!-- Improvements -->
+        <div class="improvements" id="improvements"></div>
+
+        <!-- Resume preview -->
+        <div class="resume-preview" id="resumePreview"></div>
+
+      </div><!-- /outputResult -->
+    </div><!-- /output card -->
+
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  <p>Self-hosted · Rule-Based Engine · No AI · No API Keys · No Data Stored ·
+    <a href="https://github.com" target="_blank">Push to GitHub →</a>
+  </p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
