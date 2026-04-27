@@ -2,6 +2,7 @@
   "name": "ats-resume-generator",
   "version": "1.0.0",
   "description": "Self-hosted rule-based ATS-optimized Resume & CV Generator",
+  "license": "PROPRIETARY",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
