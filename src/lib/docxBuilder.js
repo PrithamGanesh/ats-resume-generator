@@ -1,8 +1,7 @@
 import {
-  Document, Packer, Paragraph, TextRun, HeadingLevel,
-  AlignmentType, BorderStyle, ShadingType, TabStopType, TabStopLeader,
-  Header, Footer, PageNumber, Table, TableRow, TableCell, WidthType,
-  convertInchesToTwip, UnderlineType
+  Document, Packer, Paragraph, TextRun,
+  AlignmentType, BorderStyle, TabStopType,
+  convertInchesToTwip
 } from 'docx';
 
 /**

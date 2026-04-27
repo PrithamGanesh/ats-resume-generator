@@ -1,7 +1,7 @@
 {
   "name": "ats-resume-generator",
   "version": "1.0.0",
-  "description": "Self-hosted ATS-optimized Resume & CV Generator powered by Claude AI",
+  "description": "Self-hosted rule-based ATS-optimized Resume & CV Generator",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
@@ -9,9 +9,7 @@
     "dev": "node --watch src/server.js"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
     "docx": "^9.5.0",
-    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jszip": "^3.10.1",
     "multer": "^1.4.5-lts.1",
